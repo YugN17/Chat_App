@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register"
-    tools:context=".RegisterActivity">
-
+    tools:context=".LoginActivity"
+    android:background="@drawable/login">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_reg"
+            android:id="@+id/toolbar_log"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -29,14 +28,8 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:padding="16dp">
-        
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Username"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"/>
+
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,4 +56,6 @@
             />
 
     </LinearLayout>
+
+
 </RelativeLayout>
