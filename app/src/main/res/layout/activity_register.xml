@@ -31,6 +31,7 @@
         android:padding="16dp">
         
         <EditText
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -38,28 +39,31 @@
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"/>
         <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
             android:hint="Email"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"/>
         <EditText
+            android:id="@+id/passw"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:hint="Password"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"/>
 
         <Button
+            android:id="@+id/register_butt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/bb"
-            android:text="Submit"
+            android:text="REGISTER"
             />
 
     </LinearLayout>

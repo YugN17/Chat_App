@@ -1,5 +1,6 @@
 package com.example.chattapp
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +15,7 @@ import com.example.chattapp.fragments.ChatFragment
 import com.example.chattapp.fragments.SearchFragment
 import com.example.chattapp.fragments.SettingsFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,7 +52,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> { FirebaseAuth.getInstance().signOut()
+
+                val intent= Intent(this@MainActivity,WelcomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
