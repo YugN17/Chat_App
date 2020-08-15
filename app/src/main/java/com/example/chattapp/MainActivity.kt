@@ -11,17 +11,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.fragments.ChatFragment
 import com.example.chattapp.fragments.SearchFragment
 import com.example.chattapp.fragments.SettingsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var toolbar: androidx.appcompat.widget.Toolbar;
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
+    var refusers:DatabaseReference?=null
+    var firebaseUser:FirebaseUser?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +47,21 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.adapter=viewpageradapter
         tabLayout.setupWithViewPager(viewPager)
+        firebaseUser=FirebaseAuth.getInstance().currentUser
+        refusers=FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        refusers!!.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(pp: DataSnapshot) {
+
+                val users: Users?=pp.getValue(Users::class.java)
+                user_name.text=users?.getUsername()
+                Glide.with(this@MainActivity).load(users?.getProfile()).into(profile_image)
+            }
+
+        })
 
     }
 
