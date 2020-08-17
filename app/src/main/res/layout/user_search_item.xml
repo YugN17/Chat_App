@@ -37,6 +37,7 @@
         android:layout_marginTop="-10dp"
         android:backgroundTint="#228B22"
         android:visibility="gone"
+        android:id="@+id/online"
 
         />
     <de.hdodenhof.circleimageview.CircleImageView
@@ -49,6 +50,7 @@
         android:layout_marginTop="-10dp"
         android:backgroundTint="#ff0000"
         android:visibility="gone"
+        android:id="@+id/offline"
 
         />
 
@@ -62,7 +64,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="105dp"
         android:layout_marginLeft="50dp"
-        android:text="jgjdjdj"
+
         android:layout_marginTop="38dp"
         android:layout_marginEnd="160dp"
         android:layout_marginBottom="3dp"

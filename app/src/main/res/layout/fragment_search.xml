@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <EditText
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+android:id="@+id/searchuser"
+android:layout_marginTop="98dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       android:hint="Search Users here"
+       />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/searchuser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_margin="6dp"
+        android:id="@+id/searchList"/>
 </RelativeLayout>
