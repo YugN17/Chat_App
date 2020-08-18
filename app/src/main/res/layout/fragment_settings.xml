@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="98dp"
         android:id="@+id/cv1">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -53,6 +53,7 @@ android:layout_below="@id/cv1"
         android:padding="6dp">
 
         <ImageView
+            android:id="@+id/set_facebook"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
@@ -60,6 +61,7 @@ android:layout_below="@id/cv1"
             android:src="@drawable/fb"
             android:layout_marginRight="35dp"/>
         <ImageView
+            android:id="@+id/set_insta"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
@@ -68,6 +70,7 @@ android:layout_below="@id/cv1"
             android:layout_marginRight="35dp"/>
 
         <ImageView
+            android:id="@+id/set_web"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
