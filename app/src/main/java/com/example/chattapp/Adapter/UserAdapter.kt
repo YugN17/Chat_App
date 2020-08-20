@@ -1,6 +1,9 @@
 package com.example.chattapp.Adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chattapp.MessageChatActivity
 import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.R
 import de.hdodenhof.circleimageview.CircleImageView
@@ -60,6 +64,21 @@ class UserAdapter(
         val user:Users=mUsers[position]
         holder.usernametxt.text=user.getUsername()
         Glide.with(mContext).load(user.getProfile()).into(holder.profileimage)
+        holder.itemView.setOnClickListener {
+            val options=arrayOf<CharSequence>(
+                "Send Message",
+                "Visit Profile"
+            )
+            val builder:AlertDialog.Builder=AlertDialog.Builder(mContext)
+            builder.setTitle("What do you want?")
+            builder.setItems(options,DialogInterface.OnClickListener { dialog, which ->
+                if(which==0){
+                    val intent= Intent(mContext,MessageChatActivity::class.java)
+                    intent.putExtra("visit_id",user.getUID())
+                    mContext.startActivity(intent)
+                }
+            })
+        }
 
     }
 
