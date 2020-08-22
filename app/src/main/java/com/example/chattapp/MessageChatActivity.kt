@@ -22,20 +22,21 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_message_chat.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MessageChatActivity : AppCompatActivity() {
     var userIdvisit=""
     var firebaseUser:FirebaseUser?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_chat)
-        val intent= Intent()
+        intent=intent
         userIdvisit=intent.getStringExtra("visit_id")
         firebaseUser=FirebaseAuth.getInstance().currentUser
 
         val reference=FirebaseDatabase.getInstance().reference.child("Users").child(userIdvisit)
         reference.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onDataChange(p: DataSnapshot) {
@@ -55,7 +56,7 @@ class MessageChatActivity : AppCompatActivity() {
             }else{
                 sendMessageToUser(firebaseUser!!.uid,userIdvisit,message)
             }
-
+            edit_text_chat.setText("")
         }
         attach_ment.setOnClickListener {
             val intent=Intent();
@@ -89,8 +90,23 @@ class MessageChatActivity : AppCompatActivity() {
 
             if(it.isSuccessful){
 
-                val chatListReference=FirebaseDatabase.getInstance().reference.child("ChatList")
-                chatListReference.child("id").setValue(firebaseUser!!.uid)
+                val chatListReference=FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid).child(userIdvisit!!)
+                chatListReference.addListenerForSingleValueEvent(object :ValueEventListener{
+                    override fun onCancelled(p: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p: DataSnapshot) {
+                        if(!p.exists()){
+                            chatListReference.child("id").setValue(firebaseUser!!.uid)
+                        }
+                        val chatListReceiverRef=FirebaseDatabase.getInstance().reference.child("ChatList").child(userIdvisit!!).child(firebaseUser!!.uid)
+                        chatListReceiverRef.child("id").setValue(firebaseUser!!.uid)
+                    }
+
+
+                })
+
                 val reference=FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
 
 
@@ -105,8 +121,8 @@ class MessageChatActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==438 && resultCode== Activity.RESULT_OK && data!!.data!=null){
-            val loadingBar=ProgressDialog(applicationContext)
+        if(requestCode==438 && resultCode==RESULT_OK && data!=null && data!!.data!=null){
+            val loadingBar=ProgressDialog(this)
             loadingBar.setMessage("Please wait,Image is being uploaded")
             loadingBar.show()
             val fileUrl=data.data
@@ -138,7 +154,8 @@ class MessageChatActivity : AppCompatActivity() {
                     messageHashMap["url"]=url
                     messageHashMap["messageId"]=msgId
                     ref.child("Chats").child(msgId!!).setValue(messageHashMap)
-                    
+
+                    loadingBar.dismiss()
 
 
                 }

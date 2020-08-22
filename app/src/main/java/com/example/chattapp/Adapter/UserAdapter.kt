@@ -77,7 +77,11 @@ class UserAdapter(
                     intent.putExtra("visit_id",user.getUID())
                     mContext.startActivity(intent)
                 }
+                if(which==1){
+
+                }
             })
+            builder.show()
         }
 
     }
