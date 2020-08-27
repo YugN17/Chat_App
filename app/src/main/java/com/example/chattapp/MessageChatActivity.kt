@@ -7,7 +7,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chattapp.Adapter.ChatAdapter
+import com.example.chattapp.ModelClass.Chat
 import com.example.chattapp.ModelClass.Users
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -26,11 +30,19 @@ import kotlinx.android.synthetic.main.activity_message_chat.*
 class MessageChatActivity : AppCompatActivity() {
     var userIdvisit=""
     var firebaseUser:FirebaseUser?=null
+    var chatAdapter:ChatAdapter?=null
+    var mChatList:List<Chat>?=null
+    lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_chat)
         intent=intent
         userIdvisit=intent.getStringExtra("visit_id")
+        recyclerView=findViewById(R.id.recycler_view)
+        recyclerView.setHasFixedSize(true)
+        var linearLayoutManager=LinearLayoutManager(applicationContext)
+        linearLayoutManager.stackFromEnd=true
+        recyclerView.layoutManager=linearLayoutManager
         firebaseUser=FirebaseAuth.getInstance().currentUser
 
         val reference=FirebaseDatabase.getInstance().reference.child("Users").child(userIdvisit)
@@ -43,6 +55,7 @@ class MessageChatActivity : AppCompatActivity() {
                 val users=p.getValue(Users::class.java)
                 username_chat.text=users!!.getUsername()
                 Glide.with(applicationContext).load(users.getProfile()).into(profile_chat)
+                retreiveMessages(firebaseUser!!.uid,userIdvisit,users.getProfile())
 
             }
 
@@ -64,6 +77,38 @@ class MessageChatActivity : AppCompatActivity() {
             intent.type="image/*"
             startActivityForResult(Intent.createChooser(intent,"Pick Image"),438)
         }
+
+
+    }
+
+    private fun retreiveMessages(senderid: String, receiverid: String?, receiveimageUrl: String?) {
+
+        mChatList=ArrayList()
+        val reference=FirebaseDatabase.getInstance().reference.child("Chats")
+        reference.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                (mChatList as ArrayList<Chat>).clear()
+                for(snapshot in p0.children){
+                    val chat=snapshot.getValue(Chat::class.java)
+                    if (chat!!.getReceiver().equals(receiverid) && chat.getSender().equals(senderid) || chat!!.getReceiver().equals(senderid) && chat.getSender().equals(receiverid) ){
+                        (mChatList as ArrayList<Chat>).add(chat)
+                    }
+                    chatAdapter= ChatAdapter(this@MessageChatActivity, mChatList as ArrayList<Chat>,
+                        receiveimageUrl!!
+                    )
+                    recyclerView.adapter=chatAdapter
+
+                }
+            }
+
+
+        })
+
+
 
 
     }

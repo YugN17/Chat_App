@@ -5,7 +5,7 @@ class Chat{
     private var sender:String=""
     private var message:String=""
     private var receiver:String=""
-    private var isSeen:String=""
+    private var isSeen:Boolean=false
     private var url:String=""
     private var messageId:String=""
 
@@ -14,7 +14,7 @@ class Chat{
         sender: String,
         message: String,
         receiver: String,
-        isSeen: String,
+        isSeen: Boolean,
         url: String,
         messageId: String
     ) {
@@ -44,10 +44,10 @@ fun setSender(sender: String){
     fun setReceiver(receiver: String){
         this.receiver=receiver
     }
-    fun getSeen():String?{
+    fun getSeen(): Boolean{
         return isSeen
     }
-    fun setSeen(isSeen: String){
+    fun setSeen(isSeen: Boolean){
         this.isSeen=isSeen
     }
     fun geturl():String?{
