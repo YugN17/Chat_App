@@ -8,14 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.chattapp.MessageChatActivity
 import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.R
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.user_search_item.view.*
 
 class UserAdapter(
     mContext: Context,
@@ -52,7 +50,7 @@ class UserAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.ViewHolder {
         val view=LayoutInflater.from(mContext).inflate(R.layout.user_search_item,parent,false)
-        return UserAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
