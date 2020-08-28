@@ -1,6 +1,7 @@
 package com.example.chattapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -76,17 +77,23 @@ class ChatFragment : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 (mUsers as ArrayList<Users>).clear()
 
+                Log.d("inside on data changed","kk")
                 for(datasnapshot in p0.children){
                     val user=datasnapshot.getValue(Users::class.java)
+                    Log.d("pp","inside data snapshot")
                     for(eachList in useChatList!!){
-                        if(user!!.getUID().equals(eachList.getId())) {
+                        Log.d("kg",eachList.getId()+"hjhj")
+                        if((user!!.getUID()).equals(eachList.getId())) {
+                            Log.d("kP",user.getUID()+"JIJH")
                             (mUsers as ArrayList<Users>).add(user)
+                            Log.d("huu",user.getUsername())
                         }
                     }
 
 
                 }
                 userAdapter= UserAdapter(context!!, mUsers as ArrayList<Users>,true)
+
 
                 recyclerView.adapter=userAdapter
             }

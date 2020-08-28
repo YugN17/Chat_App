@@ -73,7 +73,7 @@ var firebaseUserId=FirebaseAuth.getInstance().currentUser!!.uid
                             (mUsers as ArrayList<Users>).add(user)
                         }
                     }
-                    userAdapter = UserAdapter(context!!, mUsers, false)
+                    userAdapter = UserAdapter(context!!, mUsers as ArrayList<Users>, false)
                     recyclerView.adapter = userAdapter
                 }
 
@@ -101,7 +101,7 @@ var firebaseUserId=FirebaseAuth.getInstance().currentUser!!.uid
                             (mUsers as ArrayList<Users>).add(user)
                         }
                     }
-                    userAdapter = UserAdapter(context!!, mUsers, false)
+                    userAdapter = UserAdapter(context!!, mUsers as ArrayList<Users>, false)
                     recyclerView.adapter = userAdapter
                 }
             }

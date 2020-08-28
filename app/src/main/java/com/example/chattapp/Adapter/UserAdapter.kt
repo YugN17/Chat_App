@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +16,14 @@ import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.R
 import de.hdodenhof.circleimageview.CircleImageView
 
+@Suppress("UNREACHABLE_CODE")
 class UserAdapter(
     mContext: Context,
-    mUsers:List<Users>,
+    mUsers:ArrayList<Users>,
     isChatChecked:Boolean
 ):RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private val mContext:Context
-    private val mUsers:List<Users>
+    private val mUsers:ArrayList<Users>
     private val isChatChecked:Boolean
 
     init {
@@ -54,7 +56,9 @@ class UserAdapter(
     }
 
     override fun getItemCount(): Int {
+        Log.d("jiji", mUsers.size.toString()+"jkjkj")
         return mUsers.size
+
     }
 
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {

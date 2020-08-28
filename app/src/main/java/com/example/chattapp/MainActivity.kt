@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.example.chattapp.ModelClass.Chat
 import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.fragments.ChatFragment
 import com.example.chattapp.fragments.SearchFragment
@@ -39,19 +40,49 @@ class MainActivity : AppCompatActivity() {
         tabLayout=findViewById(R.id.tablayout)
         viewPager=findViewById(R.id.view_pager)
 
-        val viewpageradapter=ViewPagerAdapter(supportFragmentManager)
+//        val viewpageradapter=ViewPagerAdapter(supportFragmentManager)
+//
+//        viewpageradapter.addFragment(ChatFragment(),"Chat")
+//        viewpageradapter.addFragment(SearchFragment(),"Search")
+//        viewpageradapter.addFragment(SettingsFragment(),"Settings")
+//
+//        viewPager.adapter=viewpageradapter
+//        tabLayout.setupWithViewPager(viewPager)
 
-        viewpageradapter.addFragment(ChatFragment(),"Chatt")
-        viewpageradapter.addFragment(SearchFragment(),"Search")
+        val ref=FirebaseDatabase.getInstance().reference.child("Chats")
+        ref.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val viewpageradapter=ViewPagerAdapter(supportFragmentManager)
+                var countReadMessages=0
+                for(datasnapshot in p0.children){
+                    val chat=datasnapshot.getValue(Chat::class.java)
+                    if(chat!!.getReceiver().equals(firebaseUser!!.uid) && !chat.getSeen()){
+                        countReadMessages+=1
+                    }
+                }
+                if(countReadMessages==0){
+                    viewpageradapter.addFragment(ChatFragment(),"Chats")
+                }else{
+                    viewpageradapter.addFragment(ChatFragment(),"Chats($countReadMessages)")
+                }
+                viewpageradapter.addFragment(SearchFragment(),"Search")
         viewpageradapter.addFragment(SettingsFragment(),"Settings")
 
         viewPager.adapter=viewpageradapter
         tabLayout.setupWithViewPager(viewPager)
+            }
+
+
+        })
         firebaseUser=FirebaseAuth.getInstance().currentUser
         refusers=FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         refusers!!.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onDataChange(pp: DataSnapshot) {
