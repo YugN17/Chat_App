@@ -43,7 +43,6 @@ android:id="@+id/right_image_view"
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seen"
         android:layout_below="@id/show_text_mssg"
 android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

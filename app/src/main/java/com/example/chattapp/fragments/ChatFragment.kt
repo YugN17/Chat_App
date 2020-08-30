@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chattapp.Adapter.UserAdapter
 import com.example.chattapp.ModelClass.ChatList
 import com.example.chattapp.ModelClass.Users
+import com.example.chattapp.Notifications.Token
 import com.example.chattapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 class ChatFragment : Fragment() {
@@ -63,7 +65,16 @@ class ChatFragment : Fragment() {
 
 
         })
+
+        updateToken(FirebaseInstanceId.getInstance().token)
         return view
+    }
+
+    private fun updateToken(token: String?) {
+        val ref=FirebaseDatabase.getInstance().reference.child("Tokens")
+        val token1=Token(token!!)
+        ref.child(firebaseUser!!.uid).setValue(token1)
+
     }
 
     private fun retriveChatList(){
