@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:padding="9dp"
-    android:layout_margin="5dp"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+  android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
     >
 <RelativeLayout
-    android:layout_width="300dp"
+    android:layout_width="240dp"
     android:layout_height="wrap_content"
     android:layout_alignParentEnd="true"
     android:layout_alignParentRight="true"
+    android:layout_gravity="end"
     
     >
     <de.hdodenhof.circleimageview.CircleImageView
@@ -16,17 +18,20 @@
         android:layout_height="40dp"
         android:src="@drawable/ic_profile"
         android:id="@+id/profile_left"
-        android:visibility="gone"/>
-
-
+        android:visibility="gone"
         />
+
+
+
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="6dp"
     android:padding="8dp"
     android:textSize="18sp"
-    android:text="testing msg"
+    android:textColor="#000000"
+    android:background="@drawable/corner_chat"
+
     android:id="@+id/show_text_mssg"
     android:layout_alignParentEnd="true"
 
@@ -36,8 +41,9 @@
     android:layout_height="100dp"
     android:layout_alignParentEnd="true"
     android:layout_alignParentRight="true"
-    android:visibility="gone"
+    android:background="@drawable/corner_chat"
 android:id="@+id/right_image_view"
+    android:visibility="gone"
     
     />
     <TextView
@@ -47,6 +53,7 @@ android:id="@+id/right_image_view"
 android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/seen_text"
+        android:layout_marginRight="5dp"
         />
 
 </RelativeLayout>

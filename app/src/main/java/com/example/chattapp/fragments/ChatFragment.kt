@@ -103,8 +103,12 @@ class ChatFragment : Fragment() {
 
 
                 }
-                userAdapter= UserAdapter(context!!, mUsers as ArrayList<Users>,true)
+                try {
+                    userAdapter = UserAdapter(context!!, mUsers as ArrayList<Users>, true)
 
+                }catch (e:NullPointerException){
+
+                }
 
                 recyclerView.adapter=userAdapter
             }

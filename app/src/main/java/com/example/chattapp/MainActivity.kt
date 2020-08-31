@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
     var refusers:DatabaseReference?=null
-    var firebaseUser:FirebaseUser?=null
+     var firebaseUser:FirebaseUser?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
 
         })
-        firebaseUser=FirebaseAuth.getInstance().currentUser
+        firebaseUser= FirebaseAuth.getInstance().currentUser!!
         refusers=FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         refusers!!.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
                 val users: Users?=pp.getValue(Users::class.java)
                 user_name.text=users?.getUsername()
-                Glide.with(this@MainActivity).load(users?.getProfile()).into(profile_image)
+                Glide.with(applicationContext).load(users?.getProfile()).into(profile_image)
             }
 
         })
@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
 
         return when (item.itemId) {
             R.id.action_settings -> { FirebaseAuth.getInstance().signOut()
@@ -145,6 +146,25 @@ class MainActivity : AppCompatActivity() {
         override fun getPageTitle(position: Int): CharSequence? {
             return titles[position]
 
+
         }
+
+    }
+    private fun updateStatus(status:String){
+        val ref=FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        val hashMap=HashMap<String,Any>()
+        hashMap["status"]=status
+        ref.updateChildren(hashMap)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateStatus("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateStatus("offline")
     }
 }

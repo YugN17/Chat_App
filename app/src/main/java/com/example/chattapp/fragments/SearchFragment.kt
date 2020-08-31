@@ -3,6 +3,7 @@ package com.example.chattapp.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +21,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_search.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SearchFragment : Fragment() {
 private lateinit var userAdapter: UserAdapter
     private lateinit var mUsers:List<Users>
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchEditText: EditText
+    lateinit var searchUser:EditText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +38,7 @@ private lateinit var userAdapter: UserAdapter
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager=LinearLayoutManager(context)
         mUsers=ArrayList()
+        searchUser=view.findViewById(R.id.searchuser)
         retrieveAllUsers()
         searchEditText=view.findViewById(R.id.searchuser)
         searchEditText.addTextChangedListener(object :TextWatcher{
@@ -93,7 +97,7 @@ var firebaseUserId=FirebaseAuth.getInstance().currentUser!!.uid
 
             override fun onDataChange(p: DataSnapshot) {
                 (mUsers as ArrayList<Users>).clear()
-                if (searchuser.text.toString() == "") {
+                if(searchUser.text.toString()=="") {
                     for (snapshot in p.children) {
 
                         val user: Users? = snapshot.getValue(Users::class.java)
@@ -101,7 +105,12 @@ var firebaseUserId=FirebaseAuth.getInstance().currentUser!!.uid
                             (mUsers as ArrayList<Users>).add(user)
                         }
                     }
-                    userAdapter = UserAdapter(context!!, mUsers as ArrayList<Users>, false)
+                    Log.d("ioio", mUsers[0].getUsername())
+                    try {
+                        userAdapter = UserAdapter(context!!, mUsers as ArrayList<Users>, false)
+                    }catch(e:NullPointerException){
+
+                    }
                     recyclerView.adapter = userAdapter
                 }
             }

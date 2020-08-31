@@ -81,7 +81,7 @@ inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         Glide.with(mcontext).load(imageUrl).into(holder.profile_image)
         if(chat.getMessage().equals("sent you an image") && !chat.geturl().equals("")) {
             if (chat.getSender().equals(firebaseUser!!.uid)) {
-                holder.show_text_msg!!.visibility = View.VISIBLE
+                holder.show_text_msg!!.visibility = View.GONE
                 holder.rightImageView!!.visibility = View.VISIBLE
                 Glide.with(mcontext).load(chat.geturl()).into(holder.rightImageView)
 

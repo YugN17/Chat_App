@@ -1,48 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/welcome"
+    android:background="@drawable/hgg"
+    android:orientation="vertical"
     tools:context=".WelcomeActivity">
 
 
     <TextView
         android:id="@+id/slash_text"
-        android:layout_width="257dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="70dp"
+        android:gravity="start"
+        android:text="@string/login"
+        android:textColor="#ffffff"
+        android:textSize="35dp" />
 
-        android:layout_centerVertical="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginEnd="56dp"
-        android:gravity="center_horizontal"
-        android:text="WELCOME"
-        android:textColor="#000000"
-        android:textSize="30dp" />
+    <TextView
+        android:layout_width="223dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:text="Welcome,Please Login to your account"
+        android:textColor="#ffffff"
+        android:textSize="28dp"
 
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Email"
+            android:textSize="15dp"
+            android:textColor="#072F5F"
+            />
+
+        <EditText
+            android:id="@+id/emaillogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="10dp" />
+
+</androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Password"
+            android:textSize="15dp"
+            android:textColor="#072F5F"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:inputType="textPassword"
+            android:id="@+id/passlogin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </androidx.cardview.widget.CardView>
+<!--    <Button-->
+<!--        android:id="@+id/login_btt"-->
+<!--        android:layout_width="131dp"-->
+<!--        android:layout_height="62dp"-->
+<!--        android:layout_below="@id/slash_text"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:text="LOGIN"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:layout_marginEnd="237dp"-->
+<!--        android:background="@drawable/bb" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/register_btt"-->
+<!--        android:layout_width="131dp"-->
+<!--        android:layout_height="62dp"-->
+<!--        android:layout_below="@id/login_btt"-->
+<!--android:text="Register"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginTop="-62dp"-->
+<!--        android:layout_marginEnd="49dp"-->
+<!--        android:background="@drawable/bb" />-->
     <Button
-        android:id="@+id/login_btt"
-        android:layout_width="131dp"
-        android:layout_height="62dp"
-        android:layout_below="@id/slash_text"
-        android:layout_alignParentEnd="true"
-        android:text="LOGIN"
+        android:id="@+id/loginbtton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="237dp"
-        android:background="@drawable/bb" />
+        android:background="@drawable/bhh"
+        android:backgroundTint="#8A2BE2"
+        android:text="LOGIN"
+        android:textColor="#ffffff" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_have_an_acccount_register"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="100dp"
+        android:textSize="16sp"
+        android:id="@+id/registerbtton"
+        android:layout_marginTop="20dp"
+        />
 
-    <Button
-        android:id="@+id/register_btt"
-        android:layout_width="131dp"
-        android:layout_height="62dp"
-        android:layout_below="@id/login_btt"
-android:text="Register"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-62dp"
-        android:layout_marginEnd="49dp"
-        android:background="@drawable/bb" />
 
-</RelativeLayout>
+</LinearLayout>

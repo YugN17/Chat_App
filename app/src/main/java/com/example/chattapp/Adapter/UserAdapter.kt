@@ -12,8 +12,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.chattapp.MessageChatActivity
+import com.example.chattapp.ModelClass.Chat
 import com.example.chattapp.ModelClass.Users
 import com.example.chattapp.R
+import com.example.chattapp.VisitUserProfile
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
 
 @Suppress("UNREACHABLE_CODE")
@@ -25,6 +32,7 @@ class UserAdapter(
     private val mContext:Context
     private val mUsers:ArrayList<Users>
     private val isChatChecked:Boolean
+    var lastmsg:String=""
 
     init {
         this.mContext=mContext
@@ -66,6 +74,24 @@ class UserAdapter(
         val user:Users=mUsers[position]
         holder.usernametxt.text=user.getUsername()
         Glide.with(mContext).load(user.getProfile()).into(holder.profileimage)
+
+        if(isChatChecked){
+            if(user.getStatus()=="online"){
+                holder.onlineprofile.visibility=View.VISIBLE
+                holder.offlineprofile.visibility=View.GONE
+
+            }else{
+                holder.onlineprofile.visibility=View.GONE
+                holder.offlineprofile.visibility=View.VISIBLE
+            }
+            retirieveLastMessage(user.getUID(),holder.LastMssgtxt)
+
+        }else{
+            holder.LastMssgtxt.visibility=View.GONE
+            holder.onlineprofile.visibility=View.GONE
+            holder.offlineprofile.visibility=View.GONE
+
+        }
         holder.itemView.setOnClickListener {
             val options=arrayOf<CharSequence>(
                 "Send Message",
@@ -81,10 +107,49 @@ class UserAdapter(
                 }
                 if(which==1){
 
+                    val intent= Intent(mContext,VisitUserProfile::class.java)
+                    intent.putExtra("visit_id",user.getUID())
+                    mContext.startActivity(intent)
                 }
             })
             builder.show()
         }
+
+    }
+
+    private fun retirieveLastMessage(Onlineuid: String?, lastMssgtxt: TextView) {
+
+        lastmsg="defaultMsg"
+        val firebaseUser=FirebaseAuth.getInstance().currentUser
+        val reference=FirebaseDatabase.getInstance().reference.child("Chats")
+        reference.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p: DataSnapshot) {
+               for(datasnapshot in p.children){
+                   val chat=datasnapshot.getValue(Chat::class.java)
+                   if(firebaseUser!=null  && chat!=null){
+
+                       if(chat.getReceiver()==firebaseUser!!.uid && chat.getSender()==Onlineuid ||chat.getReceiver()== Onlineuid && chat.getSender()==firebaseUser.uid ){
+
+                           lastmsg= chat.getMessage()!!
+                       }
+                   }
+               }
+                when(lastmsg){
+                    "defaultMsg"->lastMssgtxt.text="No Message"
+                    "sent you an image"->lastMssgtxt.text="image sent"
+                    else->lastMssgtxt.text=lastmsg
+                }
+                lastmsg="defaultMsg"
+            }
+
+
+        })
+
+
 
     }
 
